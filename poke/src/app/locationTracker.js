@@ -40,7 +40,6 @@ export default function LocationTracker() {
     };
   }, []);
 
-  // Set random target once
   useEffect(() => {
     if (!targetLocation && userLocation && !reachedTarget) {
       const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5);
@@ -48,7 +47,7 @@ export default function LocationTracker() {
     }
   }, [userLocation, targetLocation]);
 
-  // Check if user reached the target
+
   useEffect(() => {
     if (userLocation && targetLocation) {
       const distance = GetDistanceInKm(
@@ -66,7 +65,6 @@ export default function LocationTracker() {
     }
   }, [userLocation, targetLocation]);
 
-  // Fetch riddle once target is reached
   useEffect(() => {
     if (reachedTarget) {
       fetch("https://riddles-api.vercel.app/random")
@@ -76,8 +74,8 @@ export default function LocationTracker() {
             riddle: data.riddle,
             answer: data.answer,
           });
-          setUserAnswer(""); // reset
-          setIsCorrect(null); // reset
+          setUserAnswer(""); 
+          setIsCorrect(null); 
         })
         .catch((err) => {
           console.error("Failed to fetch riddle:", err);
@@ -85,7 +83,6 @@ export default function LocationTracker() {
     }
   }, [reachedTarget]);
 
-  // User answer checking function
   const checkAnswer = () => {
     if (!riddle || !userAnswer.trim()) return;
     const user = userAnswer.trim().toLowerCase();
