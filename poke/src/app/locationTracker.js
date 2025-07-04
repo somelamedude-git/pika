@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { GetRandomLocation } from "./randomLoc.js";
-import
+import {GetDistanceInKm} from "./distInKM.js";
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
@@ -37,11 +37,28 @@ export default function LocationTracker() {
   }, []);
 
   useEffect(()=>{
-    if(!targetLocation && userLocation){
+    if(!targetLocation && userLocation && !reachedTarget){
         const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5); //hard coded for now
         setTargetLocation(randomTarget);
     }
-  }, [userLocation, targetLocation])
+  }, [userLocation, targetLocation]);
+
+  useEffect(() => {
+  if (userLocation && targetLocation) {
+    const distance = GetDistanceInKm(
+      targetLocation.lat,
+      targetLocation.lng,
+      userLocation.lat,
+      userLocation.lng
+    );
+
+    if (distance <= 0.05) {
+      console.log("🎯 Target reached!");
+      setReachedTarget(true);
+      setTargetLocation(null); 
+    }
+  }
+}, [userLocation, targetLocation]);
 
   return (
     <div className="text-white">
