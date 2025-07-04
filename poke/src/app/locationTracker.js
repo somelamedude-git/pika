@@ -1,12 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { GetRandomLocation } from "./randomLoc.js";
-import {GetDistanceInKm} from "./distInKM.js";
+import { GetDistanceInKm } from "./distInKM.js";
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
   const [reachedTarget, setReachedTarget] = useState(false);
   const [targetLocation, setTargetLocation] = useState(null);
+  const [riddle, setRiddle] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
+  const [userAnswer, setUserAnswer] = useState("");
+
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -36,32 +40,61 @@ export default function LocationTracker() {
     };
   }, []);
 
-  useEffect(()=>{
-    if(!targetLocation && userLocation && !reachedTarget){
-        const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5); //hard coded for now
-        setTargetLocation(randomTarget);
+  // Set random target once
+  useEffect(() => {
+    if (!targetLocation && userLocation && !reachedTarget) {
+      const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5);
+      setTargetLocation(randomTarget);
     }
   }, [userLocation, targetLocation]);
 
+  // Check if user reached the target
   useEffect(() => {
-  if (userLocation && targetLocation) {
-    const distance = GetDistanceInKm(
-      targetLocation.lat,
-      targetLocation.lng,
-      userLocation.lat,
-      userLocation.lng
-    );
+    if (userLocation && targetLocation) {
+      const distance = GetDistanceInKm(
+        targetLocation.lat,
+        targetLocation.lng,
+        userLocation.lat,
+        userLocation.lng
+      );
 
-    if (distance <= 0.05) {
-      console.log("🎯 Target reached!");
-      setReachedTarget(true);
-      setTargetLocation(null); 
+      if (distance <= 0.05) {
+        console.log("🎯 Target reached!");
+        setReachedTarget(true);
+        setTargetLocation(null);
+      }
     }
-  }
-}, [userLocation, targetLocation]);
+  }, [userLocation, targetLocation]);
+
+  // Fetch riddle once target is reached
+  useEffect(() => {
+    if (reachedTarget) {
+      fetch("https://riddles-api.vercel.app/random")
+        .then((res) => res.json())
+        .then((data) => {
+          setRiddle({
+            riddle: data.riddle,
+            answer: data.answer,
+          });
+          setUserAnswer(""); // reset
+          setIsCorrect(null); // reset
+        })
+        .catch((err) => {
+          console.error("Failed to fetch riddle:", err);
+        });
+    }
+  }, [reachedTarget]);
+
+  // User answer checking function
+  const checkAnswer = () => {
+    if (!riddle || !userAnswer.trim()) return;
+    const user = userAnswer.trim().toLowerCase();
+    const actual = riddle.answer.trim().toLowerCase();
+    setIsCorrect(user === actual);
+  };
 
   return (
-    <div className="text-white">
+    <div className="text-white p-4">
       <h2>Your Current Location:</h2>
       {userLocation ? (
         <>
@@ -77,6 +110,28 @@ export default function LocationTracker() {
             allowFullScreen=""
             loading="lazy"
           />
+
+          {reachedTarget && riddle && (
+            <div className="mt-6 p-4 border border-green-400 rounded">
+              <h3 className="text-lg font-bold mb-2">🧩 Solve the riddle to catch your Pokémon!</h3>
+              <p className="italic mb-4">{riddle.riddle}</p>
+              <input
+                className="text-black px-3 py-2 rounded w-full mb-2"
+                type="text"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                placeholder="Your answer here..."
+              />
+              <button
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+                onClick={checkAnswer}
+              >
+                Submit
+              </button>
+              {isCorrect === true && <p className="text-green-300 mt-3"> Pokémon captured!</p>}
+              {isCorrect === false && <p className="text-red-400 mt-3"> Nope! Try again.</p>}
+            </div>
+          )}
         </>
       ) : (
         <p>Fetching location...</p>
