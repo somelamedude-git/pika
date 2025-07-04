@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { GetRandomLocation } from "./randomLoc.js";
 import { GetDistanceInKm } from "./distInKM.js";
+import { GetRandomPokemon } from "./PokeGenerator.js"
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
@@ -10,6 +11,7 @@ export default function LocationTracker() {
   const [riddle, setRiddle] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [userAnswer, setUserAnswer] = useState("");
+  const [pokemon, setPokemon] = useState(null);
 
 
   useEffect(() => {
@@ -48,6 +50,7 @@ export default function LocationTracker() {
   }, [userLocation, targetLocation]);
 
 
+
   useEffect(() => {
     if (userLocation && targetLocation) {
       const distance = GetDistanceInKm(
@@ -82,6 +85,23 @@ export default function LocationTracker() {
         });
     }
   }, [reachedTarget]);
+
+useEffect(() => {
+  if (!reachedTarget && userLocation && !pokemon) {
+    GetRandomPokemon()
+      .then((poke_data) => {
+        setPokemon({
+          name: poke_data.name,
+          type: poke_data.type,
+          image: poke_data.image,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to assign Pokémon:", error);
+        setPokemon(null);
+      });
+  }
+}, [userLocation, reachedTarget, pokemon]);
 
   const checkAnswer = () => {
     if (!riddle || !userAnswer.trim()) return;
