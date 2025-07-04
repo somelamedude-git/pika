@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import { GetRandomLocation } from "./randomLoc.js";
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
-  const [reachedTarget, set]
+  const [reachedTarget, setReachedTarget] = useState(false);
+  const [targetLocation, setTargetLocation] = useState(null);
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -32,6 +34,13 @@ export default function LocationTracker() {
       navigator.geolocation.clearWatch(watchId);
     };
   }, []);
+
+  useEffect(()=>{
+    if(!targetLocation && userLocation){
+        const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5); //hard coded for now
+        setTargetLocation(randomTarget);
+    }
+  }, [userLocation, targetLocation])
 
   return (
     <div className="text-white">
