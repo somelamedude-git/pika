@@ -1,4 +1,4 @@
-export default function getRandomLocation(lat, lng, radiusInKm) {
+export default function GetRandomLocation(lat, lng, radiusInKm) {
   const radiusInDegrees = radiusInKm / 111.32;
 
   const u = Math.random();

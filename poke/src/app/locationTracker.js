@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
+  const [reachedTarget, set]
 
   useEffect(() => {
     if (!navigator.geolocation) {
