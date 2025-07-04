@@ -12,6 +12,7 @@ export default function LocationTracker() {
   const [isCorrect, setIsCorrect] = useState(null);
   const [userAnswer, setUserAnswer] = useState("");
   const [pokemon, setPokemon] = useState(null);
+  const [pokeBadges, setPokeBadges] = useState([]);
 
 
   useEffect(() => {
@@ -102,6 +103,12 @@ useEffect(() => {
       });
   }
 }, [userLocation, reachedTarget, pokemon]);
+
+useEffect(()=>{
+    if(isCorrect && riddle){
+        setPokeBadges((prevBadges)=>[..prevBadges, pokemon])
+    }
+}, [isCorrect, pokemon, riddle])
 
   const checkAnswer = () => {
     if (!riddle || !userAnswer.trim()) return;
