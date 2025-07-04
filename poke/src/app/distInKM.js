@@ -1,4 +1,4 @@
-export default function getDistanceInKm(lat1, lng1, lat2, lng2) {
+export default function GetDistanceInKm(lat1, lng1, lat2, lng2) {
   const toRad = (x) => (x * Math.PI) / 180; 
   const R = 6371; 
 

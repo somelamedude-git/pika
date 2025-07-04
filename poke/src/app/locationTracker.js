@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { GetRandomLocation } from "./randomLoc.js";
+import
 
 export default function LocationTracker() {
   const [userLocation, setUserLocation] = useState(null);
