@@ -8,7 +8,7 @@ import ThemeToggle from "../ThemeToggle";
 import useThemeStore from "@/store/themeStore";
 
 export default function GetCurrentLocPage() {
-  const { userLocation } = useLocationStore();
+  const { userLocation} = useLocationStore();
   const [showProfessor, setShowProfessor] = useState(false);
  const [volume, setVolume] = useState(25);
   const [characterState, setCharacterState] = useState({
@@ -26,7 +26,7 @@ export default function GetCurrentLocPage() {
   const theme = useThemeStore((state)=>state.theme);
 
   return (
-    <div className="bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8"
+   <div className="bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8"
     style={{
         backgroundImage:
           theme === 0

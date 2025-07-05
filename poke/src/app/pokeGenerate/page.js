@@ -17,7 +17,6 @@ export default function PokePage() {
     dialog: "",
   });
 
-  // When Pokémon is fetched, update professor dialog and show it
   useEffect(() => {
     if (pokemon?.name) {
       setCharacterState({

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import BackgroundMusic from "./bgm.js";
-import ProfessorDialog from "./ProfessorComponent.js"; // import the dialog box
+import ProfessorDialog from "./ProfessorComponent.js"; 
 
 export default function Home() {
   const [volume, setVolume] = useState(25);
@@ -33,15 +33,14 @@ export default function Home() {
         <span className="text-white font-mono w-10 text-right">{volume}</span>
       </div>
 
-      {/* BGM */}
+    
       <BackgroundMusic volume={volume} />
 
-      {/* Title */}
       <h1 className="text-4xl font-extrabold mb-8 drop-shadow-xl text-center text-yellow-300 select-none">
         PokéCool Adventure 🌍⚡
       </h1>
 
-      {/* Professor Dialog Box */}
+      
       <ProfessorDialog characterState={characterState} nextRoute="/getCurrentLoc-util" />
     </div>
   );

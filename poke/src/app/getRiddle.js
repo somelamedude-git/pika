@@ -72,7 +72,6 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
         <p className="text-sm italic text-yellow-300">🌀 Fetching your riddle...</p>
       )}
 
-      {/* 🎉 Success Popup */}
      {showPopup && (
   <div className="absolute top-4 right-4 bg-green-700 text-white p-4 rounded-xl shadow-lg border-2 border-green-300 font-mono z-50 animate-bounce w-60 flex flex-col items-center">
     <p className="font-bold text-lg mb-2">🎉 You got it right!</p>
@@ -93,7 +92,6 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
 )}
 
 
-      {/* ❌ Failure Popup */}
       {showFailPopup && (
         <div className="absolute top-4 right-4 bg-red-700 text-white p-4 rounded-xl shadow-lg border-2 border-red-300 font-mono z-50 animate-shake">
           😅 Nope! Try again.

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useLocationStore from "@/store/locationStore";
 
 export default function CurrentLocation() {
-  const { setUserLocation } = useLocationStore(); // 👈 pull from Zustand
+  const { setUserLocation } = useLocationStore(); 
 
   const [coords, setCoords] = useState(null);
   const [syncTime, setSyncTime] = useState(null);
@@ -10,7 +10,7 @@ export default function CurrentLocation() {
   const [jokeText, setJokeText] = useState(""); 
   const [jokeIndex, setJokeIndex] = useState(0); 
 
-  // Fetch joke on mount
+
   useEffect(() => {
     if (!joke) {
       fetch("https://v2.jokeapi.dev/joke/Any?type=twopart")
@@ -24,7 +24,7 @@ export default function CurrentLocation() {
     }
   }, []);
 
-  // Typewriter effect for the joke
+ 
   useEffect(() => {
     if (joke && jokeIndex < joke.length) {
       const timeout = setTimeout(() => {
@@ -35,7 +35,7 @@ export default function CurrentLocation() {
     }
   }, [joke, jokeIndex]);
 
-  // Get location and store it in Zustand
+ 
   useEffect(() => {
     if (!navigator.geolocation) {
       console.log("Geolocation not supported");
