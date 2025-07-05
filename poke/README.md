@@ -44,3 +44,5 @@ Pika-Cool is a location-based scavenger hunt adventure! It tracks your real-worl
 When you reach the target location (automatically detected by the app), you’ll face a riddle. Solve it correctly and earn the Pokémon badge, your digital honor trophy! Fail, and it’s back to the hunt.
 
 Get ready to explore, solve, and collect like a true Pokémon master!
+
+(For the final product I will be integrating a backend as well, along with more gamification, the prototype is based on the basic features that pika-cool provides)
