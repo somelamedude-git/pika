@@ -3,19 +3,20 @@ import { useEffect } from "react";
 import GetRandomPokemon from "./PokeGenerator";
 
 export default function PokemonFetch({ reachedTarget, userLocation, pokemon, setPokemon }) {
-  useEffect(() => {
-    if (!reachedTarget && userLocation && !pokemon) {
-      GetRandomPokemon()
-        .then((poke_data) => {
-          setPokemon({
-            name: poke_data.name,
-            type: poke_data.type,
-            image: poke_data.image,
-          });
-        })
-        .catch(() => setPokemon(null));
-    }
-  }, [userLocation, reachedTarget, pokemon]);
+ useEffect(() => {
+  if (!pokemon) {
+    GetRandomPokemon()
+      .then((poke_data) => {
+        setPokemon({
+          name: poke_data.name,
+          type: poke_data.type,
+          image: poke_data.image,
+        });
+      })
+      .catch(() => setPokemon(null));
+  }
+}, []);
+
 
   if (!pokemon) {
     return (

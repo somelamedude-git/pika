@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import CurrentLocation from "../getCurrentLoc";
 import ProfessorDialog from "../ProfessorComponent";
-import BackgroundMusic from "../bgm"; 
+import BackgroundMusic from "../bgm";
 
 export default function GetCurrentLocPage() {
   const [userLocation, setUserLocation] = useState(null);
@@ -15,14 +15,12 @@ export default function GetCurrentLocPage() {
       "Now that we have acquired your current location (I am not stalking, pinky promise), let us go ahead and find the mystery destination",
   });
 
-
+const [reachedTarget, setReachedTarget] = useState(false);
 useEffect(() => {
-  const timer = setTimeout(() => {
+  if(userLocation){
     setShowProfessor(true);
-  }, 2500); 
-
-  return () => clearTimeout(timer);
-}, []);
+  }
+}, [userLocation]);
 
   return (
     <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8">
