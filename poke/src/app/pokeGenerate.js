@@ -22,9 +22,9 @@ export default function PokemonFetch({reachedTarget, userLocation, pokemon, setP
   <div className="text-white p-2">
     {pokemon ? (
       <>
-        <h2 className="text-xl font-bold">{pokemon.name}</h2>
-        <p>Type: {pokemon.type}</p>
-        <img src={pokemon.image} alt={pokemon.name} className="w-24 h-24" />
+        <div className="w-100 h-150 bg-[url(/redPix.png)] bg-cover image-rendering:pixelated bg-center">
+
+        </div>
       </>
     ) : (
       <p>No Pokémon yet!</p>
