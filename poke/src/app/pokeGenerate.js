@@ -1,8 +1,10 @@
 "use client";
 import { useEffect } from "react";
 import GetRandomPokemon from "./PokeGenerator";
+import usePokeStore from "@/store/pokeStore";
 
-export default function PokemonFetch({ reachedTarget, userLocation, pokemon, setPokemon }) {
+export default function PokemonFetch() {
+    const { pokemon, setPokemon } = usePokeStore();
  useEffect(() => {
   if (!pokemon) {
     GetRandomPokemon()

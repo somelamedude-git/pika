@@ -5,8 +5,10 @@ import BackgroundMusic from "../bgm";
 import GetRiddle from "../getRiddle";
 import ThemeToggle from "../ThemeToggle";
 import useThemeStore from "@/store/themeStore";
+import usePokeStore from "@/store/pokeStore";
 
 export default function RiddleUI() {
+const {pokemon} = usePokeStore()
   const [correct, setIsCorrect] = useState(false);
   const [volume, setVolume] = useState(25);
   const [userAnswer, setUserAnswer] = useState("");

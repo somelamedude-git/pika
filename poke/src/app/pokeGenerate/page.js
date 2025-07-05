@@ -5,9 +5,10 @@ import ProfessorDialog from "../ProfessorComponent";
 import BackgroundMusic from "../bgm";
 import ThemeToggle from "../ThemeToggle";
 import useThemeStore from "@/store/themeStore";
+import usePokeStore from "@/store/pokeStore";
 
 export default function PokePage() {
-  const [pokemon, setPokemon] = useState(null);
+  const {pokemon, setPokemon} = usePokeStore();
   const [showProfessor, setShowProfessor] = useState(false);
   const [volume, setVolume] = useState(25);
 

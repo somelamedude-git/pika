@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
+import usePokeStore from "@/store/pokeStore";
 
 export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, setIsCorrect }) {
   const [riddleData, setRiddleData] = useState(null);
   const [answer, setAnswer] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [showFailPopup, setShowFailPopup] = useState(false);
+  const {pokemon, setPokemon} = usePokeStore();
 
   useEffect(() => {
     if (reachedTarget) {
@@ -16,6 +18,8 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
           setRiddleData(data);
           setUserAnswer("");
           setIsCorrect(null);
+
+          console.log(data.answer);
         })
         .catch((err) => console.error("Failed to fetch riddle:", err));
     }
@@ -69,14 +73,25 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
       )}
 
       {/* 🎉 Success Popup */}
-      {showPopup && (
-        <>
-          <div className="absolute top-4 right-4 bg-green-600 text-white p-4 rounded-xl shadow-lg border-2 border-green-300 font-mono z-50 animate-bounce">
-            🎉 You got it right!
-          </div>
-          <ConfettiExplosion />
-        </>
-      )}
+     {showPopup && (
+  <div className="absolute top-4 right-4 bg-green-700 text-white p-4 rounded-xl shadow-lg border-2 border-green-300 font-mono z-50 animate-bounce w-60 flex flex-col items-center">
+    <p className="font-bold text-lg mb-2">🎉 You got it right!</p>
+    
+    {pokemon && (
+      <>
+        <img
+          src={pokemon.image}
+          alt={pokemon.name}
+          className="w-16 h-16 object-contain mb-2"
+          style={{ imageRendering: "pixelated" }}
+        />
+        <p className="text-yellow-200 text-sm italic">You’ve unlocked:</p>
+        <p className="text-yellow-300 font-bold uppercase text-md">{pokemon.name}</p>
+      </>
+    )}
+  </div>
+)}
+
 
       {/* ❌ Failure Popup */}
       {showFailPopup && (
