@@ -7,6 +7,7 @@ export default function ProfessorDialog({ characterState, nextRoute }) {
   const [lineIndex, setLineIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [charIndex, setCharIndex] = useState(0);
+  const [speaking, setSpeaking] = useState(false);
 
   const dialogArray = Array.isArray(characterState.dialog)
     ? characterState.dialog
@@ -24,7 +25,7 @@ export default function ProfessorDialog({ characterState, nextRoute }) {
       const timeout = setTimeout(() => {
         setDisplayedText((prev) => prev + currentLine.charAt(charIndex));
         setCharIndex((prev) => prev + 1);
-      }, 30); // Typewriter speed
+      }, 30);
       return () => clearTimeout(timeout);
     }
   }, [charIndex, currentLine]);
@@ -42,6 +43,24 @@ export default function ProfessorDialog({ characterState, nextRoute }) {
       setLineIndex((prev) => prev + 1);
     } else {
       router.push(nextRoute);
+    }
+  };
+
+  const handleSpeak = () => {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+    } else {
+      const utterance = new SpeechSynthesisUtterance(displayedText || currentLine);
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      utterance.volume = 0.8;
+      
+      utterance.onstart = () => setSpeaking(true);
+      utterance.onend = () => setSpeaking(false);
+      utterance.onerror = () => setSpeaking(false);
+      
+      window.speechSynthesis.speak(utterance);
     }
   };
 
@@ -67,7 +86,13 @@ export default function ProfessorDialog({ characterState, nextRoute }) {
           {displayedText || "..."}
         </div>
 
-        <div className="flex justify-end mt-3">
+        <div className="flex justify-end mt-3 gap-2">
+          <button
+            onClick={handleSpeak}
+            className="bg-yellow-300 text-black px-4 py-1 rounded shadow hover:bg-yellow-400 active:scale-95 transition-all text-sm"
+          >
+            {speaking ? "🔊" : "🔇"}
+          </button>
           <button
             onClick={handleClick}
             className="bg-yellow-300 text-black px-4 py-1 rounded shadow hover:bg-yellow-400 active:scale-95 transition-all text-sm"

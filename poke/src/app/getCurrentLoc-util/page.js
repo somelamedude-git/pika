@@ -1,26 +1,25 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import CurrentLocation from "../getCurrentLoc";
 import ProfessorDialog from "../ProfessorComponent";
 import BackgroundMusic from "../bgm";
+import useLocationStore from "@/store/locationStore";
 
 export default function GetCurrentLocPage() {
-  const [userLocation, setUserLocation] = useState(null);
-  const [volume, setVolume] = useState(25);
+  const { userLocation } = useLocationStore();
   const [showProfessor, setShowProfessor] = useState(false);
-
+ const [volume, setVolume] = useState(25);
   const [characterState, setCharacterState] = useState({
     name: "Professor",
     dialog:
       "Now that we have acquired your current location (I am not stalking, pinky promise), let us go ahead and find the mystery destination",
   });
 
-const [reachedTarget, setReachedTarget] = useState(false);
-useEffect(() => {
-  if(userLocation){
-    setShowProfessor(true);
-  }
-}, [userLocation]);
+  useEffect(() => {
+    if (userLocation) {
+      setShowProfessor(true);
+    }
+  }, [userLocation]);
 
   return (
     <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8">
@@ -45,13 +44,13 @@ useEffect(() => {
       <BackgroundMusic volume={volume} />
 
       {showProfessor && (
-  <ProfessorDialog characterState={characterState} nextRoute="/pokeGenerate" />
-)}
+        <ProfessorDialog
+          characterState={characterState}
+          nextRoute="/pokeGenerate"
+        />
+      )}
 
-      <CurrentLocation
-        setUserLocation={setUserLocation}
-        setCharacterState={setCharacterState}
-      />
+      <CurrentLocation setCharacterState={setCharacterState} />
     </div>
   );
 }

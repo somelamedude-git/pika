@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import useLocationStore from "@/store/locationStore";
 
-export default function CurrentLocation({ setUserLocation, setCharacterState }) {
+export default function CurrentLocation() {
+  const { setUserLocation } = useLocationStore(); // 👈 pull from Zustand
+
   const [coords, setCoords] = useState(null);
   const [syncTime, setSyncTime] = useState(null);
   const [joke, setJoke] = useState(null);
   const [jokeText, setJokeText] = useState(""); 
   const [jokeIndex, setJokeIndex] = useState(0); 
 
+  // Fetch joke on mount
   useEffect(() => {
     if (!joke) {
       fetch("https://v2.jokeapi.dev/joke/Any?type=twopart")
@@ -20,6 +24,7 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
     }
   }, []);
 
+  // Typewriter effect for the joke
   useEffect(() => {
     if (joke && jokeIndex < joke.length) {
       const timeout = setTimeout(() => {
@@ -30,6 +35,7 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
     }
   }, [joke, jokeIndex]);
 
+  // Get location and store it in Zustand
   useEffect(() => {
     if (!navigator.geolocation) {
       console.log("Geolocation not supported");
@@ -41,7 +47,7 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        setUserLocation(pos);
+        setUserLocation(pos); // ✅ Zustand-powered
         setCoords(pos);
         setSyncTime(new Date().toLocaleTimeString());
         console.log("Coords locked in:", pos);
@@ -52,7 +58,7 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
       { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 }
     );
     return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
+  }, [setUserLocation]);
 
   return (
     <div className="flex flex-col md:flex-row items-start justify-center gap-6 mt-8 transition-all duration-700 ease-in-out">
@@ -61,7 +67,6 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
           coords ? "translate-x-0 md:-translate-x-6" : ""
         }`}
       >
-       
         {joke && (
           <div className="bg-black text-green-400 border border-yellow-400 rounded-md p-3 mb-5 shadow-inner text-sm font-mono">
             <p className="mb-1 font-bold">🃏 Daily Chuckle</p>
@@ -69,7 +74,6 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
           </div>
         )}
 
-      
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold underline decoration-dotted decoration-yellow-300">
             📍 GeoTracker Console
@@ -77,41 +81,23 @@ export default function CurrentLocation({ setUserLocation, setCharacterState }) 
           <div className="w-3 h-3 bg-green-400 rounded-full animate-ping shadow-[0_0_8px_#22c55e]" />
         </div>
 
-       
         <div className="bg-yellow-100 text-yellow-900 text-sm py-2 px-3 rounded shadow-inner border border-yellow-400 mb-3">
           {coords
             ? `Location locked: (${coords.lat.toFixed(3)}, ${coords.lng.toFixed(3)})`
             : "Tracking enabled. Awaiting coordinates..."}
         </div>
 
-        {/* Info Panel */}
         <div className="bg-yellow-800/20 border border-yellow-300 rounded-md p-3 text-xs space-y-1 mb-4">
-          <p>
-            🛰️ Status:{" "}
-            <span className="text-green-300">
-              {coords ? "Location Detected" : "Active"}
-            </span>
-          </p>
-          <p>
-            🧭 Accuracy Mode:{" "}
-            <span className="text-green-300">High</span>
-          </p>
-          <p>
-            🗺️ UI Style:{" "}
-            <span className="text-green-300">Retro</span>
-          </p>
-          {syncTime && (
-            <p>
-              ⏱️ Last Sync: <span className="text-yellow-200">{syncTime}</span>
-            </p>
-          )}
+          <p>🛰️ Status: <span className="text-green-300">{coords ? "Location Detected" : "Active"}</span></p>
+          <p>🧭 Accuracy Mode: <span className="text-green-300">High</span></p>
+          <p>🗺️ UI Style: <span className="text-green-300">Retro</span></p>
+          {syncTime && <p>⏱️ Last Sync: <span className="text-yellow-200">{syncTime}</span></p>}
         </div>
 
-        {/* Terminal Feed */}
         <div className="bg-black border border-yellow-600 p-3 rounded text-green-400 text-xs font-mono shadow-inner h-40 overflow-y-auto space-y-1">
           <p> Initializing GPS module...</p>
           <p> Syncing orbital satellites...</p>
-          <p>Acquiring lock...</p>
+          <p> Acquiring lock...</p>
           {coords && (
             <>
               <p> Position confirmed ✅</p>
