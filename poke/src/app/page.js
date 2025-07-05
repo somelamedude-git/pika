@@ -5,6 +5,7 @@ import PokemonFetch from "./pokeGenerate.js";
 import BackgroundMusic from "./bgm.js";
 import GetRiddle from "./getRiddle.js";
 import TargetLoc from "./RandomLocComponent.js";
+import CurrentLocation from "./getCurrentLoc.js";
 
 export default function Home() {
   const [userLocation, setUserLocation] = useState(null);
@@ -16,27 +17,6 @@ export default function Home() {
   const [pokemon, setPokemon] = useState(null);
   const [pokeBadges, setPokeBadges] = useState([]);
   const [volume, setVolume] = useState(25);
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      console.log("Geolocation not supported");
-      return;
-    }
-    const watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.log("Error getting location", error);
-      },
-      { enableHighAccuracy: true, maximumAge: 1000, timeout: 5000 }
-    );
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
-
 
   useEffect(() => {
     if (userLocation && targetLocation) {
@@ -96,21 +76,7 @@ export default function Home() {
               loading="lazy"
               style={{ border: "none" }}
             />
-
-            {/* TARGET LOCATION REVEAL */}
-            {targetLocation && !reachedTarget && (
-              <div className="mt-6 p-5 bg-yellow-500 bg-opacity-90 rounded-xl text-black font-mono shadow-inner max-w-xl w-full select-none">
-                <h4 className="font-bold mb-2 text-lg">🎯 Current Target Coordinates:</h4>
-                <p className="text-xl">
-                  Latitude: <span>{targetLocation.lat.toFixed(5)}</span> | Longitude:{" "}
-                  <span>{targetLocation.lng.toFixed(5)}</span>
-                </p>
-                <p className="italic text-sm mt-2 opacity-90">Get there to catch your Pokémon!</p>
-              </div>
-            )}
-          </section>
-
-
+        <CurrentLocation setUserLocation={setUserLocation} location={location}/>
         <GetRiddle reachedTarget={reachedTarget} setIsCorrect={setIsCorrect} setUserAnswer={setUserAnswer} setRiddle={setRiddle}/>
         <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/>
         <TargetLoc targetLocation={targetLocation} userLocation={userLocation} reachedTarget={reachedTarget} setTargetLocation={setTargetLocation}/>
@@ -136,7 +102,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </section>
         </>
       )}
     </main>
