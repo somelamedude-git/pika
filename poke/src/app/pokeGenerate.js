@@ -26,7 +26,7 @@ export default function PokemonFetch({ reachedTarget, userLocation, pokemon, set
   }
 
   return (
-   <div className="max-w-md mx-auto bg-red-900 border-[5px] border-yellow-300 rounded-xl p-5 font-mono mt-6 shadow-md bg-[url('/main_bg.jpeg')]">
+   <div className="max-w-md mx-auto bg-red-900 border-[5px] border-yellow-300 rounded-xl p-5 font-mono mt-6 shadow-md bg-[url('/main_bg.jpeg')] transition-transform duration-300 hover:scale-[1.03] hover:shadow-[0_0_25px_rgba(255,255,0,0.5)] cursor-pointer">
   <h3 className="text-center text-2xl font-bold text-yellow-200 underline decoration-dotted mb-5">
     Pokédex Entry
   </h3>
