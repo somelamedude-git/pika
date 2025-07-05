@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import GetRandomLocation from "./randomLoc.js";
 import GetDistanceInKm from "./distInKM.js";
 import GetRandomPokemon from "./PokeGenerator.js";
+import BackgroundMusic from "./bgm.js";
 
 export default function Home() {
   const [userLocation, setUserLocation] = useState(null);
@@ -13,6 +14,7 @@ export default function Home() {
   const [userAnswer, setUserAnswer] = useState("");
   const [pokemon, setPokemon] = useState(null);
   const [pokeBadges, setPokeBadges] = useState([]);
+  const [volume, setVolume] = useState(25);
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -101,6 +103,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 p-8 text-white flex flex-col items-center font-sans">
+      <input type="range" min="0" max="100" defaultValue={volume} onChange={(e)=>setVolume(e.target.value)}/>
+      <BackgroundMusic vol={volume}/>
       <h1 className="text-4xl font-extrabold mb-8 drop-shadow-xl select-none">PokéCool Adventure 🌍⚡</h1>
 
       {!userLocation && (
