@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import ConfettiExplosion from 'react-confetti-explosion';
+import ConfettiExplosion from "react-confetti-explosion";
 
 export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, setIsCorrect }) {
   const [riddleData, setRiddleData] = useState(null);
   const [answer, setAnswer] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [showFailPopup, setShowFailPopup] = useState(false);
 
   useEffect(() => {
     if (reachedTarget) {
@@ -22,12 +23,17 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const correct = answer.trim().toLowerCase() === riddleData?.answer.trim().toLowerCase();
+    const correct =
+      answer.trim().toLowerCase() === riddleData?.answer.trim().toLowerCase();
     setIsCorrect(correct);
     setUserAnswer(answer);
+
     if (correct) {
       setShowPopup(true);
       setTimeout(() => setShowPopup(false), 3000);
+    } else {
+      setShowFailPopup(true);
+      setTimeout(() => setShowFailPopup(false), 3000);
     }
   };
 
@@ -39,7 +45,9 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
 
       {riddleData ? (
         <>
-          <p className="text-sm mb-4 text-yellow-100 italic">{riddleData.riddle}</p>
+          <p className="text-sm mb-4 text-yellow-100 italic">
+            {riddleData.riddle}
+          </p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               type="text"
@@ -60,15 +68,22 @@ export default function GetRiddle({ reachedTarget, setRiddle, setUserAnswer, set
         <p className="text-sm italic text-yellow-300">🌀 Fetching your riddle...</p>
       )}
 
-      {/* 💖 Cute Popup on correct answer */}
+      {/* 🎉 Success Popup */}
       {showPopup && (
-        <div className="absolute top-4 right-4 bg-green-600 text-white p-4 rounded-xl shadow-lg border-2 border-green-300 font-mono z-50 animate-bounce">
-          🎉 You got it right!
-        </div>
+        <>
+          <div className="absolute top-4 right-4 bg-green-600 text-white p-4 rounded-xl shadow-lg border-2 border-green-300 font-mono z-50 animate-bounce">
+            🎉 You got it right!
+          </div>
+          <ConfettiExplosion />
+        </>
       )}
 
-      {/* Optional confetti burst */}
-      {showPopup && <ConfettiExplosion />}
+      {/* ❌ Failure Popup */}
+      {showFailPopup && (
+        <div className="absolute top-4 right-4 bg-red-700 text-white p-4 rounded-xl shadow-lg border-2 border-red-300 font-mono z-50 animate-shake">
+          😅 Nope! Try again.
+        </div>
+      )}
     </div>
   );
 }

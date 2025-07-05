@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import PokemonFetch from "../pokeGenerate";
 import ProfessorDialog from "../ProfessorComponent";
 import BackgroundMusic from "../bgm";
+import ThemeToggle from "../ThemeToggle";
+import useThemeStore from "@/store/themeStore";
 
 export default function PokePage() {
   const [pokemon, setPokemon] = useState(null);
@@ -29,9 +31,19 @@ export default function PokePage() {
       return () => clearTimeout(timer);
     }
   }, [pokemon]);
+   const theme = useThemeStore((state)=>state.theme);;
 
   return (
-    <div className="min-h-screen w-full bg-[url('/background.jpeg')] bg-cover bg-center px-6 py-8 font-mono text-yellow-100">
+    <div className="min-h-screen w-full bg-cover bg-center px-6 py-8 font-mono text-yellow-100"
+    style={{
+        backgroundImage:
+          theme === 0
+            ? "url('/background.jpeg')"
+            : "url('/evening.jpg')",
+    }}
+    >
+
+        <ThemeToggle/>
       {/* 🔉 Volume Control */}
       <div className="flex items-center gap-4 w-full max-w-md ml-auto mb-6">
         <label htmlFor="volume" className="text-lg font-semibold text-white select-none">

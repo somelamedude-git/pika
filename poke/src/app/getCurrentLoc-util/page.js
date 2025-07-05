@@ -4,6 +4,8 @@ import CurrentLocation from "../getCurrentLoc";
 import ProfessorDialog from "../ProfessorComponent";
 import BackgroundMusic from "../bgm";
 import useLocationStore from "@/store/locationStore";
+import ThemeToggle from "../ThemeToggle";
+import useThemeStore from "@/store/themeStore";
 
 export default function GetCurrentLocPage() {
   const { userLocation } = useLocationStore();
@@ -21,8 +23,18 @@ export default function GetCurrentLocPage() {
     }
   }, [userLocation]);
 
+  const theme = useThemeStore((state)=>state.theme);
+
   return (
-    <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8">
+    <div className="bg-cover bg-center min-h-screen w-full px-4 py-8 flex flex-col items-center justify-start gap-8"
+    style={{
+        backgroundImage:
+          theme === 0
+            ? "url('/background.jpeg')"
+            : "url('/evening.jpg')",
+    }}
+    >
+        <ThemeToggle/>
       
       {/* 🔉 Volume Control */}
       <div className="flex items-center gap-4 w-full max-w-md">
