@@ -1,21 +1,26 @@
 "use client";
-import { Howl, Howler } from 'howler';
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { Howl, Howler } from "howler";
 
-export default function BackgroundMusic(vol){
-    const musicRef = useRef(null);
+export default function BackgroundMusic({ volume }) {
+  const musicRef = useRef(null);
+  useEffect(() => {
+    musicRef.current = new Howl({
+      src: ["/pokeMusic.mp3"], 
+      loop: true,
+    });
 
-    useEffect(()=>{
-        const music = new Howl({
-            src: '/pokeMusic.mp3',
-            loop:true,
-            volume: vol
-        })
-        music.play();
-        return()=>music.unload();
-    }, []);
+    musicRef.current.play();
 
-    useEffect(()=>{
-        Howler.volume(vol);
-    }, [vol]) //We don't want to recreate the instances
+    return () => {
+      musicRef.current.stop();
+      musicRef.current.unload();
+    };
+  }, []);
+
+  useEffect(() => {
+    Howler.volume(volume);
+  }, [volume]);
+
+  return null; 
 }
