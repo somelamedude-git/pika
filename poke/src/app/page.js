@@ -104,7 +104,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 p-8 text-white flex flex-col items-center font-sans">
       <input type="range" min="0" max="100" defaultValue={volume} onChange={(e)=>setVolume(e.target.value)}/>
-      <BackgroundMusic vol={volume}/>
+      <BackgroundMusic volume={volume}/>
       <h1 className="text-4xl font-extrabold mb-8 drop-shadow-xl select-none">PokéCool Adventure 🌍⚡</h1>
 
       {!userLocation && (
