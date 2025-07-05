@@ -1,30 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
-import GetDistanceInKm from "./distInKM.js";
-import PokemonFetch from "./pokeGenerate.js";
 import BackgroundMusic from "./bgm.js";
-import GetRiddle from "./getRiddle.js";
-import TargetLoc from "./RandomLocComponent.js";
-import CurrentLocation from "./getCurrentLoc.js";
-import RiddleCheck from "./AnswerCheck.js";
-import TargetCheck from "./reachedLoc.js";
+import ProfessorDialog from "./ProfessorComponent.js"; // import the dialog box
 
 export default function Home() {
-  const [userLocation, setUserLocation] = useState(null);
-  const [reachedTarget, setReachedTarget] = useState(false);
-  const [targetLocation, setTargetLocation] = useState(null);
-  const [riddle, setRiddle] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(null);
-  const [userAnswer, setUserAnswer] = useState("");
-  const [pokemon, setPokemon] = useState(null);
-  const [pokeBadges, setPokeBadges] = useState([]);
   const [volume, setVolume] = useState(25);
-  const [characterState, setCharacterState] = useState(null);
-
+  const [characterState, setCharacterState] = useState({
+    name: "Professor",
+    dialog: [
+      "Welcome, young traveler!",
+      "The world of PokéCool awaits you.",
+      "Gather your courage and let's begin your journey."
+    ]
+  });
 
   return (
-    <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full">
-      <div className="flex items-center gap-4 mb-6 w-full max-w-md">
+    <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full px-4 py-6">
+      {/* Volume Control */}
+      <div className="flex items-center gap-4 mb-6 w-full max-w-md mx-auto">
         <label htmlFor="volume" className="text-lg font-semibold text-white select-none">
           🔊 Volume
         </label>
@@ -39,18 +32,17 @@ export default function Home() {
         />
         <span className="text-white font-mono w-10 text-right">{volume}</span>
       </div>
-     <BackgroundMusic volume={volume} /> 
-      <h1 className="text-4xl font-extrabold mb-8 drop-shadow-xl select-none">
+
+      {/* BGM */}
+      <BackgroundMusic volume={volume} />
+
+      {/* Title */}
+      <h1 className="text-4xl font-extrabold mb-8 drop-shadow-xl text-center text-yellow-300 select-none">
         PokéCool Adventure 🌍⚡
       </h1>
-      {/* <RiddleCheck isCorrect={isCorrect} riddle={riddle} setRiddle={setRiddle} /> */}
-        <CurrentLocation setUserLocation={setUserLocation} location={location}/>
-        {/* <GetRiddle reachedTarget={reachedTarget} setIsCorrect={setIsCorrect} setUserAnswer={setUserAnswer} setRiddle={setRiddle}/> */}
-        {/* <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/> */}
-        {/* <TargetLoc targetLocation={targetLocation} userLocation={userLocation} reachedTarget={reachedTarget} setTargetLocation={setTargetLocation}/>
-        <TargetCheck userLocation={userLocation} targetLocation={targetLocation} setReachedTarget={setReachedTarget} setTargetLocation={setTargetLocation}/> */}
 
-      
+      {/* Professor Dialog Box */}
+      <ProfessorDialog characterState={characterState} nextRoute="/getCurrentLoc-util" />
     </div>
   );
 }
