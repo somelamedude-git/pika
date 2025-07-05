@@ -37,3 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ![pika-cool](./public/pika-proto.png)
 ![pika-badge](./public/pika-badge.png)
+
+
+Pika-Cool is a location-based scavenger hunt adventure! It tracks your real-world location and challenges you to find a random spot within a 10 km radius. Along the way, you’re assigned a Pokémon to catch.
+
+When you reach the target location (automatically detected by the app), you’ll face a riddle. Solve it correctly and earn the Pokémon badge, your digital honor trophy! Fail, and it’s back to the hunt.
+
+Get ready to explore, solve, and collect like a true Pokémon master!
