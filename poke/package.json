@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^17.0.1",
     "howler": "^2.2.4",
+    "mongoose": "^8.16.1",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -24,4 +26,4 @@
     "tailwindcss": "^4.1.11",
     "tailwindcss-animate": "^1.0.7"
   }
-} 
+}

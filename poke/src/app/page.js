@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import GetRandomLocation from "./randomLoc.js";
 import GetDistanceInKm from "./distInKM.js";
-import GetRandomPokemon from "./PokeGenerator.js";
+import PokemonFetch from "./pokeGenerate.js";
 import BackgroundMusic from "./bgm.js";
 
 export default function Home() {
@@ -71,19 +71,6 @@ export default function Home() {
     }
   }, [reachedTarget]);
 
-  useEffect(() => {
-    if (!reachedTarget && userLocation && !pokemon) {
-      GetRandomPokemon()
-        .then((poke_data) => {
-          setPokemon({
-            name: poke_data.name,
-            type: poke_data.type,
-            image: poke_data.image,
-          });
-        })
-        .catch(() => setPokemon(null));
-    }
-  }, [userLocation, reachedTarget, pokemon]);
 
   useEffect(() => {
     if (isCorrect && riddle) {
@@ -175,24 +162,7 @@ export default function Home() {
             </section>
           )}
 
-          {!reachedTarget && pokemon && (
-            <section className="w-full max-w-xl bg-indigo-800 bg-opacity-90 rounded-2xl p-8 mb-8 shadow-lg border-2 border-indigo-600 flex items-center gap-8 select-none">
-              <div className="relative w-32 h-32 rounded-xl overflow-hidden shadow-xl border-4 border-indigo-500 transition-transform duration-300 hover:scale-105">
-                <img
-                  src={pokemon.image}
-                  alt={pokemon.name}
-                  className="w-full h-full object-contain"
-                  draggable={false}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              </div>
-              <div>
-                <h3 className="text-3xl font-bold">{pokemon.name}</h3>
-                <p className="text-indigo-300 italic capitalize tracking-wide mt-1">Type: {pokemon.type}</p>
-                <p className="mt-3 text-indigo-200 font-medium">Find the target location to catch me!</p>
-              </div>
-            </section>
-          )}
+        <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/>
 
           <section className="w-full max-w-xl bg-gray-900 bg-opacity-80 rounded-2xl p-6 shadow-inner mt-auto select-none">
             <h3 className="text-2xl font-semibold mb-5 border-b border-gray-700 pb-3">Poké Badges 🏅</h3>
