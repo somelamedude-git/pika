@@ -19,6 +19,7 @@ export default function Home() {
   const [pokemon, setPokemon] = useState(null);
   const [pokeBadges, setPokeBadges] = useState([]);
   const [volume, setVolume] = useState(25);
+  const [characterState, setCharacterState] = useState(null);
 
 
   return (

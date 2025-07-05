@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-export default function CurrentLocation({ setUserLocation }) {
+export default function CurrentLocation({ setUserLocation, setCharacterState }) {
   const [coords, setCoords] = useState(null);
   const [syncTime, setSyncTime] = useState(null);
   const [joke, setJoke] = useState(null);
-  const [jokeText, setJokeText] = useState(""); // For typewriter
-  const [jokeIndex, setJokeIndex] = useState(0); // Typewriter index
+  const [jokeText, setJokeText] = useState(""); 
+  const [jokeIndex, setJokeIndex] = useState(0); 
 
   useEffect(() => {
     if (!joke) {
@@ -14,19 +14,18 @@ export default function CurrentLocation({ setUserLocation }) {
         .then((data) => {
           const fullJoke = `${data.setup} ${data.delivery}`;
           setJoke(fullJoke);
-          setJokeText(""); // reset text
+          setJokeText("");
           setJokeIndex(0);
         });
     }
   }, []);
 
-  // Typewriter effect
   useEffect(() => {
     if (joke && jokeIndex < joke.length) {
       const timeout = setTimeout(() => {
         setJokeText((prev) => prev + joke.charAt(jokeIndex));
         setJokeIndex((prev) => prev + 1);
-      }, 30); // typing speed
+      }, 30);
       return () => clearTimeout(timeout);
     }
   }, [joke, jokeIndex]);
