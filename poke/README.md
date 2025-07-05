@@ -1,48 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧩 PokéRiddle Quest 🎒🌍
 
-## Getting Started
+A location-based Pokémon-themed web game where players must **reach real-world coordinates** to unlock and solve riddles, guided by none other than **Professor Oak** himself.
 
-First, run the development server:
+> _"It’s dangerous to go alone. Take this... voice-guided encouragement."_  
+> — Professor Oak (probably)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- 🗺️ **Live GPS tracking** — Uses your device's live location to guide you toward a hidden Poké-destination.
+- 🤖 **Professor Oak dialog** — Click to hear Professor Oak speak as you progress!
+- 🔉 **Background music and volume control** — Game audio fully customizable to set the perfect journey mood.
+- 🌅 **Dynamic themes** — Switch between morning and evening background styles.
+- ❓ **Riddles at your destination** — Once you're at the spot, test your wits and unlock your Pokémon!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📦 Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js** 15
+- **Tailwind CSS** for styling
+- **Zustand** for state management
+- **HTML Geolocation API** for live location tracking
+- **Web Speech API** for voice feedback
+- **Modular Components**: Reusable React components for dialogs, riddle generation, background music, etc.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔌 APIs Used
 
-## Deploy on Vercel
+| API                     | Purpose                                              |
+|-------------------------|------------------------------------------------------|
+| 🧠 **Riddle API**        | To generate the riddles for players to solve         |
+| 😂 **Joke API**          | To sprinkle humor or serve as bonus Professor lines  |
+| 🌐 **Google Maps API**   | To render maps showing user and target locations     |
+| 🧭 **Web Geolocation API** | To fetch the live location of the player’s device   |
+| 🧍‍♂️ **Pokémon API**       | To fetch Pokémon images, data, and names             |
+| 🗣️ **Web Speech API**     | To make Professor Oak talk out loud (because why not?)|
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📸 Screenshots
 
-![pika-cool](./public/pika-proto.png)
-![pika-badge](./public/pika-badge.png)
+| Professor Oak Dialog | Live Location Tracking | Riddle UI |
+|----------------------|------------------------|-----------|
+| ![oak](./public/oak.png) | ![map](./public/maps.png) | ![riddle](./public/riddle.png) |
 
+---
 
-Pika-Cool is a location-based scavenger hunt adventure! It tracks your real-world location and challenges you to find a random spot within a 10 km radius. Along the way, you’re assigned a Pokémon to catch.
+## 📍 Gameplay Flow
 
-When you reach the target location (automatically detected by the app), you’ll face a riddle. Solve it correctly and earn the Pokémon badge, your digital honor trophy! Fail, and it’s back to the hunt.
+1. **Get Your Location** – Let the app detect your current location.
+2. **Find the Target** – Move towards the mystery destination shown on the map.
+3. **Professor Oak Speaks** – Get periodic encouragement or instructions.
+4. **Unlock the Riddle** – Reach your target to unlock a riddle.
+5. **Solve & Catch** – Solve it right and catch your assigned Pokémon.
 
-Get ready to explore, solve, and collect like a true Pokémon master!
+---
 
-(For the final product I will be integrating a backend as well, along with more gamification, the prototype is based on the basic features that pika-cool provides)
