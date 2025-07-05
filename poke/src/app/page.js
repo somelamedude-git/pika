@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import BackgroundMusic from "./bgm.js";
 import ProfessorDialog from "./ProfessorComponent.js"; 
+import ThemeToggle from "./ThemeToggle.js";
+import useThemeStore from "@/store/themeStore.js";
 
 export default function Home() {
   const [volume, setVolume] = useState(25);
@@ -13,9 +15,18 @@ export default function Home() {
       "Gather your courage and let's begin your journey."
     ]
   });
+   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <div className="bg-[url('/background.jpeg')] bg-cover bg-center min-h-screen w-full px-4 py-6">
+    <div className="bg-cover bg-center min-h-screen w-full px-4 py-6"
+    style={{
+       backgroundImage:
+            theme === 0
+              ? "url('/background.jpeg')"
+              : "url('/evening.jpg')",
+    }}
+    >
+      <ThemeToggle/>
       {/* Volume Control */}
       <div className="flex items-center gap-4 mb-6 w-full max-w-md mx-auto">
         <label htmlFor="volume" className="text-lg font-semibold text-white select-none">

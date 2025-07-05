@@ -85,10 +85,11 @@ export default function RiddleUI() {
               : "url('/evening.jpg')",
         }}
       >
+        
         <ThemeToggle />
 
         {/* 🔉 Volume Control */}
-        <div className="flex items-center gap-4 w-full max-w-md ml-auto mb-6">
+        <div className="flex items-center gap-4 w-full max-w-md ml-auto mb-6 mr-80">
           <label htmlFor="volume" className="text-lg font-semibold text-white select-none">
             🔊 Volume
           </label>
@@ -146,7 +147,7 @@ export default function RiddleUI() {
       <ThemeToggle />
 
       {/* 🔉 Volume Control */}
-      <div className="flex items-center gap-4 w-full max-w-md ml-auto mb-6">
+      <div className="flex items-center gap-4 w-full max-w-md ml-auto mb-6 mr-80">
         <label htmlFor="volume" className="text-lg font-semibold text-white select-none">
           🔊 Volume
         </label>
