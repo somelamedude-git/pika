@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import CurrentLocation from "../getCurrentLoc";
 import ProfessorDialog from "../ProfessorComponent";
-import BackgroundMusic from "../bgm"; // 💿 import the music!
+import BackgroundMusic from "../bgm"; 
 
 export default function GetCurrentLocPage() {
   const [userLocation, setUserLocation] = useState(null);
@@ -44,15 +44,12 @@ useEffect(() => {
         <span className="text-white font-mono w-10 text-right">{volume}</span>
       </div>
 
-      {/* 🎵 Background Music */}
       <BackgroundMusic volume={volume} />
 
-      {/* 🧑‍🏫 Professor Dialog */}
       {showProfessor && (
   <ProfessorDialog characterState={characterState} nextRoute="/pokeGenerate" />
 )}
 
-      {/* 📍 Geo Tracker UI */}
       <CurrentLocation
         setUserLocation={setUserLocation}
         setCharacterState={setCharacterState}
