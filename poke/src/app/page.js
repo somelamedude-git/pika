@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import GetRandomLocation from "./randomLoc.js";
 import GetDistanceInKm from "./distInKM.js";
 import PokemonFetch from "./pokeGenerate.js";
 import BackgroundMusic from "./bgm.js";
 import GetRiddle from "./getRiddle.js";
+import TargetLoc from "./RandomLocComponent.js";
 
 export default function Home() {
   const [userLocation, setUserLocation] = useState(null);
@@ -37,12 +37,6 @@ export default function Home() {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  useEffect(() => {
-    if (!targetLocation && userLocation && !reachedTarget) {
-      const randomTarget = GetRandomLocation(userLocation.lat, userLocation.lng, 5);
-      setTargetLocation(randomTarget);
-    }
-  }, [userLocation, targetLocation, reachedTarget]);
 
   useEffect(() => {
     if (userLocation && targetLocation) {
@@ -119,6 +113,7 @@ export default function Home() {
 
         <GetRiddle reachedTarget={reachedTarget} setIsCorrect={setIsCorrect} setUserAnswer={setUserAnswer} setRiddle={setRiddle}/>
         <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/>
+        <TargetLoc targetLocation={targetLocation} userLocation={userLocation} reachedTarget={reachedTarget} setTargetLocation={setTargetLocation}/>
 
           <section className="w-full max-w-xl bg-gray-900 bg-opacity-80 rounded-2xl p-6 shadow-inner mt-auto select-none">
             <h3 className="text-2xl font-semibold mb-5 border-b border-gray-700 pb-3">Poké Badges 🏅</h3>
