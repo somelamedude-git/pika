@@ -6,7 +6,7 @@ export default function BackgroundMusic({ volume }) {
   const musicRef = useRef(null);
   useEffect(() => {
     musicRef.current = new Howl({
-      src: ["/pokeMusic.mp3"], 
+      src: ["/IChooseYou.mp3"], 
       loop: true,
     });
 
