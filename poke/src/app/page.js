@@ -45,7 +45,7 @@ export default function Home() {
       {/* <RiddleCheck isCorrect={isCorrect} riddle={riddle} setRiddle={setRiddle} /> */}
         <CurrentLocation setUserLocation={setUserLocation} location={location}/>
         {/* <GetRiddle reachedTarget={reachedTarget} setIsCorrect={setIsCorrect} setUserAnswer={setUserAnswer} setRiddle={setRiddle}/> */}
-        <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/>
+        {/* <PokemonFetch reachedTarget={reachedTarget} userLocation={userLocation} pokemon={pokemon} setPokemon={setPokemon}/> */}
         {/* <TargetLoc targetLocation={targetLocation} userLocation={userLocation} reachedTarget={reachedTarget} setTargetLocation={setTargetLocation}/>
         <TargetCheck userLocation={userLocation} targetLocation={targetLocation} setReachedTarget={setReachedTarget} setTargetLocation={setTargetLocation}/> */}
 
