@@ -58,4 +58,4 @@ A location-based Pokémon-themed web game where players must **reach real-world 
 5. **Solve & Catch** – Solve it right and catch your assigned Pokémon.
 
 ---
-deployment link: <a>https://pika-cool-git-main-praptis-projects-e22f758c.vercel.app/</a>
+<h3>deployment link</h3>: <a>https://pika-cool-git-main-praptis-projects-e22f758c.vercel.app/</a>
